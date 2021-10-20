@@ -17,7 +17,6 @@ function solution(rows, columns, queries) {
 	};
 
 	let matrix = matrix_init();
-	console.log(matrix);
 	for (let i = 0; i < queries.length; i++) {
 		let dir = [0, 1];
 		let now = [queries[i][0], queries[i][1]];
@@ -43,8 +42,6 @@ function solution(rows, columns, queries) {
 		}
 		answer.push(min);
 	}
-	console.log("-----");
-	console.log(matrix);
 
 	return answer;
 }
