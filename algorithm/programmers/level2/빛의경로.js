@@ -17,7 +17,7 @@ function solution(grid) {
 		data.push(ta);
 	}
 
-	const travle = (start, now) => {
+	const travle = (start, now, dir) => {
 		if (start === 1) {
 			answer.push(now);
 			return;
