@@ -49,7 +49,7 @@ function solution(p) {
         if(isCorrect(u)){
             return solve(v,sum+u)
         }else{
-            return('('+solve(v,'')+')'+makeInverse(u));
+            return(sum+'('+solve(v,'')+')'+makeInverse(u));
         }
     }
 
