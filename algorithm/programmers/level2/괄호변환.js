@@ -1,3 +1,4 @@
+//solved
 function solution(p) {
     function isCorrect(text){
         let checkStack = [];
