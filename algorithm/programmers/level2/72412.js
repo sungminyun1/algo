@@ -62,7 +62,6 @@ function solution(info, query) {
     for(let i = 0; i<q_data.length; i++){
         let count = 0;
         let idx = searchIndex(data,q_data[i].score);
-        console.log(idx)
         for(let j = idx+1; j<data.length; j++){
             if(q_data[i].lang !== '-' && q_data[i].lang !== data[j].lang){
                 continue;
