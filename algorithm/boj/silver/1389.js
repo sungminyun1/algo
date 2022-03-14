@@ -30,6 +30,23 @@ function main(arr){
             graph[b].push(a);
         }
     }
+    let count = 0;
+    const bfs = (now,visit,long) =>{
+        visit.push(now);
+        count +=long
+        for(let i =0; i<graph[now].length; i++){
+            if(!visit.includes(''+graph[now][i])){
+                bfs(''+graph[now][i],visit,long+1);
+            }
+        }
+    }
 
-    console.log(Object.keys(graph)[1])
+    let keys = Object.keys(graph);
+    console.log(keys)
+    for(let i =0; i<keys.length; i++){
+        count = 0;
+        bfs(keys[i],[],0);
+        console.log(count)
+    }
 }
+
