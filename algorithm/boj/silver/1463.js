@@ -21,4 +21,4 @@ function main(input){
     }
     console.log(arr[input])
 }
-main(input);
+main(+input);
