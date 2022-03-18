@@ -28,42 +28,54 @@ main(M,N,H,Arr)
 function main(M,N,H,Arr){
     
     const direction = [[1,0],[-1,0],[0,1],[0,-1],[N,0],[-N,0]] //아래,위,오,왼,위층,아래층
-    const needVisit = [];
-    for(let i =0; i<Arr.length; i++){
-        let idx = Arr[i].indexOf(1);
-        if(idx >= 0){
-            needVisit.push([i,idx])
+    let needVisit = [];
+    const len = N*H;
+    let count = 0;
+    for(let i =0; i<len; i++){
+        for(let j =0; j<M; j++){
+            if(Arr[i][j] === 1){
+                needVisit.push([i,j])
+                count++;
+            }else if(Arr[i][j] === -1){
+                count++;
+            }
         }
     }
     let day = 0;
-    while(needVisit.length){
-        let nexDay = []
-        while(needVisit.length){
+    while(needVisit[0]){
+        let nextDay = []
+        let nowlen = needVisit.length;
+        for(let i =0; i<nowlen; i++){
             let [row,col] = needVisit.shift();
-            Arr[row][col] = 1;
-            for(let i =0; i<direction.length; i++){
+            for(let i =0; i<6; i++){
                 let nRow = row + direction[i][0];
                 let nCol = col + direction[i][1];
-                if(nRow >= 0 && nRow < Arr.length && nCol >= 0 && nCol < M){
+                if(nRow >= 0 && nRow < len && nCol >= 0 && nCol < M){
                     if(Arr[nRow][nCol] === 0 ){
-                        Arr[nRow][nCol] = 3;
-                        nexDay.push([nRow,nCol]);
+                        Arr[nRow][nCol] = 1;
+                        count++;
+                        nextDay.push([nRow,nCol]);
                     }
                 }
             }
         }
         day++;
-        console.log(Arr)
-        needVisit.push(...nexDay)
+        needVisit = nextDay;
     }
-    let complete = true;
-    for(let i =0; i<Arr.length; i++){
-        if(Arr[i].includes(0)){
-            complete = false;
-        }
-    }
+    // let complete = true;
+    // for(let i =0; i<len; i++){
+    //     for(let j =0; j<M; j++){
+    //         if(Arr[i][j] === 0){
+    //             complete = false;
+    //             break;
+    //         }
+    //     }
+    //     if(!complete){
+    //         break;
+    //     }
+    // }
 
-    if(complete){
+    if(count === M*N*H){
         console.log(day-1)
     }else{
         console.log(-1)
