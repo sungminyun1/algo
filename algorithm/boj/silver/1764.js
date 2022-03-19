@@ -1,13 +1,13 @@
-const input = `3 4
-ohhenrie
-charlie
-baesangwook
-obama
-baesangwook
-ohhenrie
-clinton`.toString().trim().split('\n');
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n')
+// const input = `3 4
+// ohhenrie
+// charlie
+// baesangwook
+// obama
+// baesangwook
+// ohhenrie
+// clinton`.toString().trim().split('\n');
+const fs = require('fs');
+const input = fs.readFileSync('dev/stdin').toString().trim().split('\n')
 let M = +input[0].split(' ')[0];
 let N = +input[0].split(' ')[1];
 let arr1 = []

@@ -1,10 +1,10 @@
-const input = `5 3 2
-0 0 0 0 0
-0 0 0 0 0
-0 0 0 0 0
-0 0 0 0 0
-0 0 1 0 0
-0 0 0 0 0`.toString().trim().split('\n')
+// const input = `5 3 2
+// 0 0 0 0 0
+// 0 0 0 0 0
+// 0 0 0 0 0
+// 0 0 0 0 0
+// 0 0 1 0 0
+// 0 0 0 0 0`.toString().trim().split('\n')
 // let cube = [];
     // let layer = [];
     // for(let i =0; i<Arr.length; i++){
@@ -15,8 +15,8 @@ const input = `5 3 2
     //     }
     // }
     // console.log(cube);
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
+const fs = require('fs');
+const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 const M = +input[0].split(' ')[0]
 const N = +input[0].split(' ')[1]
 const H = +input[0].split(' ')[2]
