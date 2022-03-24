@@ -1,89 +1,63 @@
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split(' ').map(val => +val);
-// const input = `1000 1 1000
-// 999 1000`.toString().trim().split('\n');
-const readline = require('readline');
-const std = readline.createInterface({
-    input : process.stdin,
-    output : process.stdout,
-})
-let V;
-let arr = [];
-std.on('line',(input) =>{
-    input.trim().split(' ').map(val => +val);
-    V = +input[0].split(' ')[2];
-    let arr = [];
-    for(let i =1; i<input.length; i++){
-        let tmp = input[i].split(' ')
-        arr.push([+tmp[0], +tmp[1]]);
+// let input = `1000 1 1000
+// 999 1000`.split("\n");
+const fs = require("fs");
+const input = fs.readFileSync("dev/stdin").toString().trim().split("\n");
+const [N, M, Start] = input.shift().split(" ");
+input = input
+  .map((val, idx) => {
+    return val.split(" ").map((val2) => +val2);
+  })
+  .sort((a, b) => {
+    if (a[0] === b[0]) return b[1] - a[1];
+    return b[0] - a[0];
+  });
+const graph = {};
+for (let i = 0; i < input.length; i++) {
+  let [from, to] = input[i];
+  if (!graph[from]) {
+    graph[from] = [to];
+  } else {
+    graph[from].push(to);
+  }
+
+  if (!graph[to]) {
+    graph[to] = [from];
+  } else {
+    graph[to].push(from);
+  }
+}
+DFS(+Start, graph);
+BFS(+Start, graph);
+function DFS(Start, Graph) {
+  let visited = [];
+  let dfs = [Start];
+  let res = [];
+  while (dfs.length) {
+    let now = dfs.pop();
+    if (visited[now]) {
+      continue;
     }
-    
-}).on('close',()=>{
-    main(arr,V);
-})
+    visited[now] = true;
+    res.push(now);
+    dfs.push(...Graph[now]);
+  }
+  console.log(res.join(" "));
+}
 
-// const input = fs.readFileSync('/dev/stdin').toString().trim().split(' ').map(val => +val);
-// let V = +input[0].split(' ')[2];
-// let arr = [];
-// for(let i =1; i<input.length; i++){
-//     let tmp = input[i].split(' ')
-//     arr.push([+tmp[0], +tmp[1]]);
-// }
-// main(arr,V);
-
-
-function main(arr,V){
-    const graph = {};
-    for(let i =0; i<arr.length; i++){
-        if(graph[arr[i][0]]){
-            graph[arr[i][0]].push(arr[i][1]);
-        }else{
-            graph[arr[i][0]] = [arr[i][1]]
-        }
-
-        if(graph[arr[i][1]]){
-            graph[arr[i][1]].push(arr[i][0]);
-        }else{
-            graph[arr[i][1]] = [arr[i][0]]
-        }
+function BFS(Start, Graph) {
+  let visited = [];
+  let bfs = [Start];
+  let res = [];
+  while (bfs.length) {
+    let now = bfs.shift();
+    if (visited[now]) {
+      continue;
     }
-
-    let visited = [];
-    let needVisited = [];
-
-    //DFS
-    needVisited.push(V);
-    while(needVisited.length){
-        let now = needVisited.pop();
-        if(visited.includes(now)){
-            continue;
-        }
-        visited.push(now);
-        let candi = graph[now].sort((a,b)=>b-a);
-        needVisited.push(...candi);
+    visited[now] = true;
+    res.push(now);
+    while (Graph[now].length) {
+      bfs.push(Graph[now].pop());
     }
-    let DFS_res = visited.reduce((prev,now)=>{
-        return prev + ` ${now}`
-    },'')
-    console.log(DFS_res.trim())
-
-    visited = [];
-    needVisited = [];
-
-    //BFS
-    needVisited.push(V);
-    while(needVisited.length){
-        let now = needVisited.shift();
-        if(visited.includes(now)){
-            continue;
-        }
-        visited.push(now);
-        let candi = graph[now].sort((a,b)=>a-b);
-        needVisited.push(...candi);
-    }
-
-    let BFS_res = visited.reduce((prev,now)=>{
-        return prev + ` ${now}`
-    },'')
-    console.log(BFS_res.trim())
+  }
+  console.log(res.join(" "));
 }
