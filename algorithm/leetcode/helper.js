@@ -21,3 +21,18 @@ class LL {
     }
   }
 }
+
+function makeBT(arr) {
+  arr.unshift(0);
+  const make = (idx) => {
+    if (!arr[idx]) {
+      return null;
+    }
+    return {
+      val: arr[idx],
+      left: make(idx * 2),
+      right: make(idx * 2 + 1),
+    };
+  };
+  return make(1);
+}
