@@ -50,3 +50,5 @@ function makeBT(arr) {
 }
 
 console.log(levelOrder(makeBT([3, 9, 20, null, null, 15, 7])));
+
+console.log();
