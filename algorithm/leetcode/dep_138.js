@@ -26,4 +26,5 @@ var copyRandomList = function (head) {
     });
   };
   make(now);
+  return arr[0]
 };
