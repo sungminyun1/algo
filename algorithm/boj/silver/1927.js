@@ -8,8 +8,8 @@ const input = `9
 0
 0
 32`.split('\n').map(val=>+val);
-const fs = require('fs');
-const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(val=>+val);
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(val=>+val);
 main(input)
 function main(arr){
     let heap = [0];
