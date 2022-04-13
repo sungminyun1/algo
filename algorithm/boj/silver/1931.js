@@ -10,14 +10,26 @@ const input = `11
 8 12
 2 13
 12 14`.split('\n');
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 const arr = []
 for(let i =1; i<input.length; i++){
     let tmp = input[i].split(' ').map(val=>+val);
-    tmp.push(tmp[1]-tmp[0])
     arr.push(tmp);
 }
 main(arr)
 function main(arr){
-    arr.sort((a,b)=>a[2]-b[2])
-    console.log(arr)
+    arr.sort((a,b)=>{
+        if(a[1]===b[1]) return a[0]-b[0]
+        else return a[1] - b[1]
+    })
+    let count =1;
+    let selected = arr[0];
+    for(let i = 1; i<arr.length; i++){
+        if(arr[i][0]>= selected[1]){
+            count++;
+            selected = arr[i]
+        }
+    }
+    console.log(count)
 }
