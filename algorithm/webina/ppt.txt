@@ -1,0 +1,12 @@
+먼저 vpc부터 살펴보도록 하겠습니다.
+3- public ip 같은 경우 유동 ip이기때문에 ec2 인스턴스를 재시작하게되면 ip가 바뀌어버립니다. 
+이를위해 elastic ip라는 고정된 아이피를 제공하는 서비스가 있습니다. 또는 온프레미스 환경에서 사용하는 ip를 가져오는 BYOIP 도 있습니다.
+
+4. vpc내에는 주 라우팅 
+
+7. 네트워크 acl 은 state less 라서 in out 따로 각각 지정해줘야함
+보안그룹은 stateful이라서 하나만 지정해도됨
+
+8. nat, nat forwarding
+
+10. vpc peering 은 물리적인 연결이 아니다. vpc의 cidr 가 겹치면 안됨
