@@ -10,3 +10,5 @@
 8. nat, nat forwarding
 
 10. vpc peering 은 물리적인 연결이 아니다. vpc의 cidr 가 겹치면 안됨
+
+
