@@ -23,6 +23,8 @@ const fs = require('fs');
 const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 let [n,m] = input.shift().split(' ').map(Number);
 let mymap = {};
+
+
 for(let i =0; i<n; i++){
     let [key,val] = input[i].split(' ');
     mymap[key] = val;
