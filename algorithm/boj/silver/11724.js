@@ -7,7 +7,8 @@ const input = `6 8
 5 4
 2 4
 2 3`.split('\n');
-
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 let graph = {};
 let n = +input[0].split(' ')[0]
 for(let i =1; i<input.length; i++){
