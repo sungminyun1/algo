@@ -6,8 +6,8 @@ top
 pop
 top
 pop`.split('\n')
-const fs = require('fs');
-const input = fs.readFileSync('dev/stdin').toString().trim().split('\n')
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n')
 const stack = [];
 const result = [];
 for(let i =1; i<input.length; i++){
