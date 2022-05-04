@@ -21,8 +21,8 @@ front
 back
 pop_back
 pop_back`.split('\n');
-const fs = require('fs');
-const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 const deq = [];
 const result = [];
 
