@@ -4,6 +4,3 @@ ACDEB`.split('\n');
 
 input.shift();
 main(arr);
-function main(arr){
-
-}
