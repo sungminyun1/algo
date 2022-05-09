@@ -1,52 +1,30 @@
-const input = `10
-A
-B
-C
-D
-E
-F
-G
-H
-I
-J`.split('\n')
+const input = `2
+GCF
+ACDEB`.split('\n');
 // const fs = require('fs');
 // const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
-main(input)
+input.shift();
+main(input);
 function main(arr){
-    let result = -Infinity;
-
-    const alpha = {
-        A:0,B:1,C:2,D:3,E:4,F:5,G:6,H:7,I:8,J:9
-    }
-    const clac = (map) =>{
-        let tresult = 0;
-        for(let i =1; i<arr.length; i++){
-            let num = '';
-            for(let j =0; j<arr[i].length; j++){
-                let idx = alpha[arr[i][j]]
-                num += map[idx];
+    const map = {};
+    for (let i =0; i<arr.length; i++) {
+        for (let j =0; j<arr[i].length; j++) {
+            let idx = arr[i].length -1 - j;
+            if(!map[arr[i][j]]){
+                map[arr[i][j]] = idx;
+            }else if(map[arr[i][j]] < idx){
+                map[arr[i][j]] = idx;
             }
-            tresult += Number(num);
-        }
-        if(tresult > result){
-            result = tresult;
         }
     }
 
-    const find = (map,list) =>{
-        if(!list.length){
-            clac(map);
-            return;
+    let order = Object.keys(map).sort((a,b)=>map[b] - map[a]);
+    console.log(arr.reduce((prev,cur)=>{
+        let now = 0;
+        for(let i =0; i<cur.length; i++){
+            let token = 9 - order.indexOf(cur[i]);
+            now += token * Math.pow(10,cur.length -1 - i);
         }
-
-        for(let i =0; i<list.length; i++){
-            let tmp = [...list];
-            tmp.splice(i,1);
-            find([...map,list[i]],tmp)
-        }
-    }
-
-    find([],[0,1,2,3,4,5,6,7,8,9]);
-
-    console.log(result)
+        return prev += now;
+    },0))
 }
