@@ -1,51 +1,75 @@
-const input = `1   
-3 3 7
+const input = `2
+10 8 17
 0 0
-0 1
-0 2
 1 0
-1 2
-2 0
-2 2`.split('\n');
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
-for(let j = 1; j<input.length;){
-    let [M,N,X] = input[j].split(' ').map(val=>+val);
-    j++;
-    let arr = []
-    for(let i = 0; i<X; i++,j++){
-        arr.push(input[j].split(' ').map(val => +val))
+1 1
+4 2
+4 3
+4 5
+2 4
+3 4
+7 4
+8 4
+9 4
+7 5
+8 5
+9 5
+7 6
+8 6
+9 6
+10 10 1
+5 5`.split('\n').map(val=>val.split(' ').map(Number));
+const cases = input.shift();
+let k = 0;
+for(let i =0; i<cases[0]; i++){
+
+    const [M,N,K] = input[k++];
+    const tmp = [];
+    for(let j =0; j<K; j++){
+        tmp.push(input[k++]);
     }
-    main(M,N,arr)
+    main(M,N,K,tmp);
 }
 
-function main(M,N,arr){
-    let board = []
-    for(let i = 0; i<M; i++){
-        board.push(Array(N).fill(0))
-    }
-    for(let i =0; i<arr.length; i++){
-        board[arr[i][0]][arr[i][1]] = 1;
-    }
+function main(M,N,K,Board){
+    const visited = []
     let count = 0;
 
-    const direction = [[1,0],[0,1],[,-1,0],[0,-1]];
-
-    const find = (row,col) =>{
-        board[row][col] = 2;
-        for(let i =0; i<direction.length; i++){
-            let nrow = row + direction[i][0];
-            let ncol = col + direction[i][1];
-            if(nrow >=0 && nrow < M && ncol >=0 && ncol < N && board[nrow][ncol] === 1){
-                find(nrow,ncol)
+    const valid = (row,col) =>{
+        for(let i=0; i<Board.length; i++){
+            if(Board[i][0] === row && Board[i][1] === col){
+                if(visited.includes(i)){
+                    break;
+                }
+                visited.push(i)
+                return i;
             }
         }
+        return -1;
     }
-    for(let i =0; i<arr.length; i++){
-        if(board[arr[i][0]][arr[i][1]] === 1){
-            count++;
-            find(arr[i][0],arr[i][1])
+
+    const find =([row,col]) =>{
+        const needVisit = [[row,col]];
+        const direction = [[1,0],[0,1],[-1,0],[0,-1]];
+
+        while(needVisit.length){
+            for(let i =0; i<direction.length; i++){
+                let next_row = row + direction[i][0];
+                let next_col = col + direction[i][1];
+                if(row >= 0 && row < M && col >=0 && col < N && valid(next_row,next_col) >=0){
+
+                }
+            }
         }
+
     }
-    console.log(count)
+
+    for(let i =0; i<Board.length; i++){
+        if(visited.includes(i)){
+            continue;
+        }
+        count++;
+        visited.push(i);
+        find(Board[i]);
+    }
 }
