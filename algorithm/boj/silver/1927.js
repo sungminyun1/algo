@@ -7,71 +7,73 @@ const input = `9
 0
 0
 0
-32`.split('\n').map(val=>+val);
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(val=>+val);
-main(input)
-function main(arr){
-    let heap = [0];
-    const swap = (a,b)=>{
-        let tmp = heap[a];
-        heap[a] = heap[b];
-        heap[b] = tmp;
-    }
-    const insert = (val) =>{
-        heap.push(val);
-        let now = heap.length -1 ;
-        while(now > 1){
-            let parent = Math.floor(now/2);
-            if(heap[parent] > heap[now]){
-                swap(now,parent);
-                now = parent;
+32`.split('\n').map(Number);
+const fs = require('fs');
+const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(Number);
+
+input.shift();
+
+main(input);
+
+function main(Arr){
+    const arr = [0];
+    let result = [];
+
+    const remove = () =>{
+        if(!arr[1]){
+            result.push(0);
+            return;
+        }
+        if(arr.length === 2){
+            result.push(arr.pop());
+            return;
+        }
+
+        result.push(arr[1]);
+        arr[1] = arr.pop();
+        let i = 1;
+        while(true){
+            let left = arr[i*2] || Infinity;
+            let right = arr[i*2 +1] || Infinity;
+            if(left === Infinity && right === Infinity) break;
+            let min = left <= right ? i*2 : i*2 + 1
+            if(arr[i] > arr[min]){
+                let tmp = arr[i];
+                arr[i] = arr[min];
+                arr[min] = tmp
+                i = min;
             }else{
                 break;
             }
         }
     }
 
-    const remove = () =>{
-        if(heap.length <= 1){
-            console.log(0)
-        }else if(heap.length === 2){
-            console.log(heap.pop())
-        }else{
-            console.log(heap[1]);
-            let val = heap.pop();
-            heap[1] = val;
-            let now = 1;
-            while(true){
-                let left = now*2;
-                let right = now*2+1;
-                if(heap[left] === undefined && heap[right] === undefined){
-                    break;
-                }else if(heap[right] === undefined && heap[left] !== undefined){
-                    if(heap[left] < heap[now]){
-                        swap(left,now);
-                        now = left;
-                    }else{
-                        break;
-                    }
-                }else{
-                    let smaller = heap[left] <= heap[right] ? left : right;
-                    if(heap[smaller] < heap[now]){
-                        swap(smaller,now);
-                        now = smaller;
-                    }else{
-                        break;
-                    }
-                }
+    const insert = (val) =>{
+        arr.push(val);
+        let i = arr.length-1;
+
+        while(true){
+            if(i === 1) break;
+
+            let parent = Math.floor(i/2);
+            if(arr[parent] > arr[i]){
+                let tmp = arr[i];
+                arr[i] = arr[parent];
+                arr[parent] = tmp;
+                i = parent;
+            }else{
+                break;
             }
         }
     }
-    for(let i = 1; i<arr.length; i++){
-        if(arr[i] === 0){
+
+    for(let i =0; i<Arr.length; i++){
+        if(Arr[i] === 0){
             remove()
         }else{
-            insert(arr[i])
+            insert(Arr[i])
         }
     }
-}
 
+    console.log(result.join('\n'));
+}
