@@ -1,24 +1,14 @@
-const input = `2
-10 8 17
-0 0
-1 0
-1 1
+const input = `1
+5 3 6
+0 2
+1 2
+2 2
+3 2
 4 2
-4 3
-4 5
-2 4
-3 4
-7 4
-8 4
-9 4
-7 5
-8 5
-9 5
-7 6
-8 6
-9 6
-10 10 1
-5 5`.split('\n').map(val=>val.split(' ').map(Number));
+4 0`.split('\n').map(val=>val.split(' ').map(Number));
+const fs = require('fs');
+const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(val=>val.split(' ').map(Number));
+
 const cases = input.shift();
 let k = 0;
 for(let i =0; i<cases[0]; i++){
@@ -53,11 +43,12 @@ function main(M,N,K,Board){
         const direction = [[1,0],[0,1],[-1,0],[0,-1]];
 
         while(needVisit.length){
+            let [now_row,now_col] = needVisit.shift();
             for(let i =0; i<direction.length; i++){
-                let next_row = row + direction[i][0];
-                let next_col = col + direction[i][1];
-                if(row >= 0 && row < M && col >=0 && col < N && valid(next_row,next_col) >=0){
-
+                let next_row = now_row + direction[i][0];
+                let next_col = now_col + direction[i][1];
+                if(next_row >= 0 && next_row < M && next_col >=0 && next_col < N && valid(next_row,next_col) >=0){
+                    needVisit.push([next_row,next_col]);
                 }
             }
         }
@@ -72,4 +63,6 @@ function main(M,N,K,Board){
         visited.push(i);
         find(Board[i]);
     }
+
+    console.log(count)
 }
