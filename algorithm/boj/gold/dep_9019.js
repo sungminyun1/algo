@@ -22,6 +22,9 @@ function main(Before, After) {
     return (num % 10) * 1000 + Math.floor(num / 10);
   };
 
+
+
+
   while (queue.length) {
     let nextStep = [];
     let isFind = false;
