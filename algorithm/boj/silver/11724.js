@@ -1,57 +1,44 @@
-const input = `6 8
+const input = `6 5
 1 2
 2 5
 5 1
 3 4
-4 6
-5 4
-2 4
-2 3`.split('\n');
-// const fs = require('fs');
-// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
-let graph = {};
-let n = +input[0].split(' ')[0]
-for(let i =1; i<input.length; i++){
-    let [a,b] = input[i].split(' ');
-    if(graph[a]){
-        graph[a].push(b);
-    }else{
-        graph[a] = [b];
-    }
-    if(graph[b]){
-        graph[b].push(a);
-    }else{
-        graph[b] = [a];
-    }
-}
-main(n,graph)
-function main(n,graph){
-    let visited = [];
-    let count =0;
+4 6`.split('\n').map(val=>val.split(' ').map(Number));
 
-    const findNext = () =>{
-        for(let i of Object.keys(graph)){
-            if(!visited.includes(i)){
-                return i
-            }
-        }
-        return 'done';
+// const fs = require('fs');
+// const input = fs.readFileSync('dev/stdin').toString().trim().split('\n').map(val=>val.split(' ').map(Number));
+
+const [N,M] = input.shift();
+
+main(N,M,input);
+
+function main(N,M,Arr){
+    let count = 0;
+    let graph = [0];
+    let visited = new Array(N+1).fill(0)
+    visited[0] = 1;
+    for(let i =1; i<=N; i++){
+        graph[i] = []
     }
-    while(true){
-        let next = findNext();
-        if(next === 'done'){
-            break;
-        }
-        let needVisit = [...graph[next]];
-        while(needVisit.length){
-            let now = needVisit.shift();
-            if(visited.includes(now)){
-                continue;
+    for(let i =0; i<M; i++){
+        const [from,to] = Arr[i];
+        graph[from].push(to);
+        graph[to].push(from);
+    }
+
+    const dfs = (now) =>{
+        visited[now] = 1;
+        for(let item of graph[now]){
+            if(!visited[item]){
+                dfs(item)
             }
-            visited.push(now);
-            needVisit.push(...graph[now]);
         }
-        count++
+    }
+    for(let i =1; i<=N; i++){
+        if(!visited[i]){
+            count++
+            dfs(i)
+        }
     }
 
     console.log(count)
